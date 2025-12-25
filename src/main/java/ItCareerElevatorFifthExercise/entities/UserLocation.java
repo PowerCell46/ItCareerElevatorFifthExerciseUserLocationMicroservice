@@ -22,21 +22,22 @@ public class UserLocation {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-//    @Column(nullable = false)
-//    private String username;
-
     @Column(nullable = false)
     private String userId;
+
+    @Column(nullable = false)
+    private String username;
 
     @Column
     private String recordedAt; // 25/12/2025 23:47
 
-    @Column(name = "geom", columnDefinition = "geometry(Point,4326)")
-    private Point geom;
+    @Column(name = "geom", columnDefinition = "geometry(Point,4326)") // EPSG:4326, “WGS 84”
+    private Point geometry;
 
-    public UserLocation(String userId, String recordedAt, Point geom) {
+    public UserLocation(String username, String userId, String recordedAt, Point geometry) {
+        this.username = username;
         this.userId = userId;
         this.recordedAt = recordedAt;
-        this.geom = geom;
+        this.geometry = geometry;
     }
 }

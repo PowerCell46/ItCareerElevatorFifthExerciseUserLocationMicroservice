@@ -22,13 +22,17 @@ public class UserLocationServiceImpl implements UserLocationService {
     private static final Integer SPATIAL_REFERENCE_SYSTEM_IDENTIFIER = 4326; // EPSG:4326, “WGS 84”
 
     private final UserLocationRepository userLocationRepository;
-    private final GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), SPATIAL_REFERENCE_SYSTEM_IDENTIFIER);
+    private final GeometryFactory geometryFactory = new GeometryFactory(
+            new PrecisionModel(),
+            SPATIAL_REFERENCE_SYSTEM_IDENTIFIER
+    );
 
     @Override
     public void persistUserLocation(UserLocationDTO userLocationDTO) {
         Point point = initializePoint(userLocationDTO.getLongitude(), userLocationDTO.getLatitude());
 
         UserLocation entity = new UserLocation(
+                userLocationDTO.getUsername(),
                 userLocationDTO.getUserId(),
                 TimeUtils.formatGeolocationTimestamp(userLocationDTO.getTimestamp()), // ? PROBLEM HERE OR ON THE FE!?!?
                 point
