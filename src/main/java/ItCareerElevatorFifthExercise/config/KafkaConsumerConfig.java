@@ -1,8 +1,9 @@
-package ItCareerElevatorFifthExcercise.config;
+package ItCareerElevatorFifthExercise.config;
 
-import ItCareerElevatorFifthExcercise.DTOs.UserLocationDTO;
+import ItCareerElevatorFifthExercise.DTOs.UserLocationDTO;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.springframework.beans.factory.annotation.Value; // Import this
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
@@ -18,28 +19,33 @@ import java.util.Map;
 @Configuration
 public class KafkaConsumerConfig {
 
+    @Value("${spring.kafka.bootstrap-servers}")
+    private String bootstrapServers;
+
+    @Value("${spring.kafka.consumer.group-id}")
+    private String groupId;
+
     @Bean
     public ConsumerFactory<String, UserLocationDTO> userLocationConsumerFactory() {
         Map<String, Object> properties = new HashMap<>();
 
-        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-        properties.put(ConsumerConfig.GROUP_ID_CONFIG, "user-location-consumer"); // Any consumer instance that runs with this specific groupId will be considered part of the PDF Mailer application
-        properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        properties.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
 
-        JacksonJsonDeserializer<UserLocationDTO> jsonDeserializer = new JacksonJsonDeserializer<>(UserLocationDTO.class);
-        jsonDeserializer.addTrustedPackages("*");
+        StringDeserializer keyDeserializer = new StringDeserializer();
+        JacksonJsonDeserializer<UserLocationDTO> valueDeserializer = new JacksonJsonDeserializer<>(UserLocationDTO.class);
+        valueDeserializer.addTrustedPackages("*");
 
         return new DefaultKafkaConsumerFactory<>(
                 properties,
-                new StringDeserializer(),
-                jsonDeserializer
+                keyDeserializer,
+                valueDeserializer
         );
     }
 
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, UserLocationDTO> userLocationKafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, UserLocationDTO> factory = new ConcurrentKafkaListenerContainerFactory<>();
-
         factory.setConsumerFactory(userLocationConsumerFactory());
         return factory;
     }

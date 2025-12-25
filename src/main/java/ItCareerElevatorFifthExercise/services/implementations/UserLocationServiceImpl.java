@@ -1,9 +1,10 @@
-package ItCareerElevatorFifthExcercise.services.implementations;
+package ItCareerElevatorFifthExercise.services.implementations;
 
-import ItCareerElevatorFifthExcercise.DTOs.UserLocationDTO;
-import ItCareerElevatorFifthExcercise.entities.UserLocation;
-import ItCareerElevatorFifthExcercise.repositories.UserLocationRepository;
-import ItCareerElevatorFifthExcercise.services.interfaces.UserLocationService;
+import ItCareerElevatorFifthExercise.DTOs.UserLocationDTO;
+import ItCareerElevatorFifthExercise.entities.UserLocation;
+import ItCareerElevatorFifthExercise.repositories.UserLocationRepository;
+import ItCareerElevatorFifthExercise.services.interfaces.UserLocationService;
+import ItCareerElevatorFifthExercise.utils.TimeUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.locationtech.jts.geom.Coordinate;
@@ -11,6 +12,7 @@ import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.PrecisionModel;
 import org.springframework.stereotype.Service;
+
 
 @Slf4j
 @Service
@@ -26,7 +28,12 @@ public class UserLocationServiceImpl implements UserLocationService {
     public void persistUserLocation(UserLocationDTO userLocationDTO) {
         Point point = initializePoint(userLocationDTO.getLongitude(), userLocationDTO.getLatitude());
 
-        UserLocation entity = new UserLocation(userLocationDTO.getUserId(), "", point);
+        UserLocation entity = new UserLocation(
+                userLocationDTO.getUserId(),
+                TimeUtils.formatGeolocationTimestamp(userLocationDTO.getTimestamp()), // ? PROBLEM HERE OR ON THE FE!?!?
+                point
+        );
+
         save(entity);
     }
 

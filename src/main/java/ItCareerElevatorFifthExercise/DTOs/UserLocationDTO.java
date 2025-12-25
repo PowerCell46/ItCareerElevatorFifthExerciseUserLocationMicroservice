@@ -1,4 +1,4 @@
-package ItCareerElevatorFifthExcercise.DTOs;
+package ItCareerElevatorFifthExercise.DTOs;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,9 +9,9 @@ import lombok.Setter;
 @AllArgsConstructor
 public class UserLocationDTO {
 
-    // TODO: username can be added also
-
     private String userId;
+
+    private String username;
 
     private Double latitude;
 

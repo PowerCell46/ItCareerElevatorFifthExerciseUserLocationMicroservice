@@ -1,4 +1,4 @@
-package ItCareerElevatorFifthExcercise.entities;
+package ItCareerElevatorFifthExercise.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,9 +22,14 @@ public class UserLocation {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
+//    @Column(nullable = false)
+//    private String username;
+
+    @Column(nullable = false)
     private String userId;
 
-    private String recordedAt;
+    @Column
+    private String recordedAt; // 25/12/2025 23:47
 
     @Column(name = "geom", columnDefinition = "geometry(Point,4326)")
     private Point geom;

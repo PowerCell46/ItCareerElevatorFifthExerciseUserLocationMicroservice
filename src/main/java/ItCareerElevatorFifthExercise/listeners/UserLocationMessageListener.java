@@ -1,7 +1,7 @@
-package ItCareerElevatorFifthExcercise.listeners;
+package ItCareerElevatorFifthExercise.listeners;
 
-import ItCareerElevatorFifthExcercise.DTOs.UserLocationDTO;
-import ItCareerElevatorFifthExcercise.services.interfaces.UserLocationService;
+import ItCareerElevatorFifthExercise.DTOs.UserLocationDTO;
+import ItCareerElevatorFifthExercise.services.interfaces.UserLocationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -15,19 +15,19 @@ public class UserLocationMessageListener {
     private final UserLocationService userLocationService;
 
     @KafkaListener(
-            topics = "userLocation",
-            groupId = "user-location-consumer",
+            topics = "${spring.kafka.topic.user-location:userLocation}",
+            groupId = "${spring.kafka.consumer.group-id}",
             containerFactory = "userLocationKafkaListenerContainerFactory"
     )
     public void handleUserLocationMessage(UserLocationDTO userLocationDTO) {
-        log.info("---> Handling message in the 'userLocation' topic.");
+        log.info("---> Handling message in the Kafka topic.");
 
         if (userLocationDTO == null || userLocationDTO.getUserId() == null) {
-            log.error("Invalid userLocationDTO: {}{}", System.lineSeparator(), userLocationDTO);
-            return; // TODO: Should smth else happen?
+            log.error("Invalid userLocationDTO received: {}", userLocationDTO);
+            return;
         }
 
-        log.info("Received data from Kafka: {}{}", System.lineSeparator(), userLocationDTO);
+        log.info("Received data from Kafka: {}", userLocationDTO);
         userLocationService.persistUserLocation(userLocationDTO);
     }
 }
