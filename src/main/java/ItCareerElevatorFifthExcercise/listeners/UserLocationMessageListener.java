@@ -1,6 +1,7 @@
 package ItCareerElevatorFifthExcercise.listeners;
 
 import ItCareerElevatorFifthExcercise.DTOs.UserLocationDTO;
+import ItCareerElevatorFifthExcercise.services.interfaces.UserLocationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class UserLocationMessageListener {
 
-//    private final
+    private final UserLocationService userLocationService;
 
     @KafkaListener(
             topics = "userLocation",
@@ -27,7 +28,6 @@ public class UserLocationMessageListener {
         }
 
         log.info("Received data from Kafka: {}{}", System.lineSeparator(), userLocationDTO);
-
-//        userLocationService.
+        userLocationService.persistUserLocation(userLocationDTO);
     }
 }

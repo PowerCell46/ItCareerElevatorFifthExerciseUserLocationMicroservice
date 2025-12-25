@@ -9,7 +9,9 @@ import lombok.Setter;
 @AllArgsConstructor
 public class UserLocationDTO {
 
-    private String userId; // TODO: username can be added also
+    // TODO: username can be added also
+
+    private String userId;
 
     private Double latitude;
 
