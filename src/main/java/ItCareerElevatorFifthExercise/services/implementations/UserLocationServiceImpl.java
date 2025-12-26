@@ -34,7 +34,7 @@ public class UserLocationServiceImpl implements UserLocationService {
         UserLocation entity = new UserLocation(
                 userLocationDTO.getUsername(),
                 userLocationDTO.getUserId(),
-                TimeUtils.formatGeolocationTimestamp(userLocationDTO.getTimestamp()), // ? PROBLEM HERE OR ON THE FE!?!?
+                TimeUtils.formatGeolocationTimestamp(userLocationDTO.getRecordedAt()),
                 point
         );
 
@@ -48,7 +48,10 @@ public class UserLocationServiceImpl implements UserLocationService {
 
     @Override
     public UserLocation save(UserLocation userLocation) {
-        log.info("Persisting location for user {}.", userLocation.getUserId());
+        log.info("Persisting location for user {}, recorded at {} to the database.",
+                userLocation.getUsername(),
+                userLocation.getRecordedAt()
+        );
 
         return userLocationRepository.save(userLocation);
     }

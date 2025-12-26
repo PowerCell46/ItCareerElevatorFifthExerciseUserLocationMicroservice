@@ -23,11 +23,11 @@ public class UserLocationMessageListener {
         log.info("---> Handling message in the Kafka topic.");
 
         if (userLocationDTO == null || userLocationDTO.getUserId() == null) {
-            log.error("Invalid userLocationDTO received: {}", userLocationDTO);
-            return;
+            log.error("Invalid userLocationDTO received: {}.", userLocationDTO);
+            return; // TODO: Should anything else happen?
         }
 
-        log.info("Received data from Kafka: {}", userLocationDTO);
+        log.info("Received data from Kafka: {}.", userLocationDTO);
         userLocationService.persistUserLocation(userLocationDTO);
     }
 }

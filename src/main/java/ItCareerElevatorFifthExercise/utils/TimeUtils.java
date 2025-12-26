@@ -17,7 +17,7 @@ public class TimeUtils {
         Instant instant = Instant.ofEpochMilli(epochMillis);
         LocalDateTime localDateTime = LocalDateTime.ofInstant(
                 instant,
-                ZoneId.systemDefault() // or ZoneId.of("Europe/Sofia")
+                ZoneId.systemDefault() // same as ZoneId.of("Europe/Sofia")
         );
 
         return localDateTime.format(FORMATTER);
