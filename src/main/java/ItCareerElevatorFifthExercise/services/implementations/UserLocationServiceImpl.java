@@ -13,7 +13,6 @@ import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.PrecisionModel;
 import org.springframework.stereotype.Service;
 
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -32,10 +31,10 @@ public class UserLocationServiceImpl implements UserLocationService {
         Point point = initializePoint(userLocationDTO.getLongitude(), userLocationDTO.getLatitude());
 
         UserLocation entity = new UserLocation(
-                userLocationDTO.getUsername(),
                 userLocationDTO.getUserId(),
-                TimeUtils.formatGeolocationTimestamp(userLocationDTO.getRecordedAt()),
-                point
+                userLocationDTO.getUsername(),
+                point,
+                TimeUtils.formatGeolocationTimestampToString(userLocationDTO.getRecordedAt())
         );
 
         save(entity);

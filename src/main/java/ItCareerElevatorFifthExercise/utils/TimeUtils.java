@@ -9,7 +9,7 @@ public class TimeUtils {
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
-    public static String formatGeolocationTimestamp(Long epochMillis) {
+    public static String formatGeolocationTimestampToString(Long epochMillis) {
         if (epochMillis == null) {
             return null;
         }

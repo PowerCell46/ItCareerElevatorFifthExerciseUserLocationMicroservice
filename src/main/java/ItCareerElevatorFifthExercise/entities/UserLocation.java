@@ -29,15 +29,15 @@ public class UserLocation {
     private String username;
 
     @Column
-    private String recordedAt; // 25/12/2025 23:47
+    private String recordedAt; // For reading data convenience: 25/12/2025 23:47
 
     @Column(name = "geom", columnDefinition = "geometry(Point,4326)") // EPSG:4326, “WGS 84”
     private Point geometry;
 
-    public UserLocation(String username, String userId, String recordedAt, Point geometry) {
-        this.username = username;
+    public UserLocation(String userId, String username, Point geometry, String recordedAt) {
         this.userId = userId;
-        this.recordedAt = recordedAt;
+        this.username = username;
         this.geometry = geometry;
+        this.recordedAt = recordedAt;
     }
 }
