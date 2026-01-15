@@ -28,6 +28,9 @@ public class UserLocationMessageListener {
         }
 
         log.info("Received data from Kafka: {}.", userLocationDTO);
+
+        // TODO: Implement Inbox pattern here
+
         userLocationService.persistUserLocation(userLocationDTO);
     }
 }

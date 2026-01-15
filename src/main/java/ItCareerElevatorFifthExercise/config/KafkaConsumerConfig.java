@@ -3,7 +3,7 @@ package ItCareerElevatorFifthExercise.config;
 import ItCareerElevatorFifthExercise.DTOs.UserLocationDTO;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
-import org.springframework.beans.factory.annotation.Value; // Import this
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
@@ -33,7 +33,7 @@ public class KafkaConsumerConfig {
         properties.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
 
         StringDeserializer keyDeserializer = new StringDeserializer();
-        JacksonJsonDeserializer<UserLocationDTO> valueDeserializer = new JacksonJsonDeserializer<>(UserLocationDTO.class);
+        var valueDeserializer = new JacksonJsonDeserializer<>(UserLocationDTO.class);
         valueDeserializer.addTrustedPackages("*");
 
         return new DefaultKafkaConsumerFactory<>(
@@ -45,7 +45,7 @@ public class KafkaConsumerConfig {
 
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, UserLocationDTO> userLocationKafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, UserLocationDTO> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        var factory = new ConcurrentKafkaListenerContainerFactory<String, UserLocationDTO>();
         factory.setConsumerFactory(userLocationConsumerFactory());
         return factory;
     }
